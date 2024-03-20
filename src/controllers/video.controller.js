@@ -76,11 +76,17 @@ const updateVideo = asyncHandler(async (req, res) => {
         throw new ApiError(400, "Video id is needed")
     }
 
-    const {title, description,thumbnail} = req.body
+    const {title, description} = req.body
 
-    console.log(thumbnail);
+    const thumbnailLocalPath = await req.file?.path
+    
+    if (!thumbnailLocalPath) {
+        throw new ApiError(400, "Cannot find the local path")
+    }
 
-    if (!title || !description || !thumbnail) {
+    const thumbnail = await uploadOnCloudinary(thumbnailLocalPath)
+
+    if (!title && !description && !thumbnail) {
         throw new ApiError(400, "All fields are required")
     }
 
@@ -90,7 +96,7 @@ const updateVideo = asyncHandler(async (req, res) => {
             $set: {
                 title,
                 description,
-                thumbnail
+                thumbnail: thumbnail.url
             }
         },
         {new: true}
