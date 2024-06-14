@@ -1,4 +1,3 @@
-# backend series
+# Backend of TweetTube
 
-This is a video series on backend with javascript
-- [Model Link](https://app.eraser.io/workspace/YtPqZ1VogxGy1jzIDkzj)
+This is a backend of combination of twitter and youtube
